@@ -1,54 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import mongoose from 'mongoose'; // Import the mongoose package
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Model } from 'mongoose'; // Import the mongoose package
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { Transaction } from './schema/transaction.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class TransactionsService {
-  // create a mongodb connection to store transactions using mongoose
-  private db = mongoose.connection;
   
-  // create a schema for transactions
-  private Schema = mongoose.Schema;
-  private transactionSchema = new this.Schema({
-    source: String,
-    destination: String,
-    amount: Number,
-    gasUsed: Number,
-    receiptHash: String
-  });
-  private Transaction = mongoose.model('Transaction', this.transactionSchema);
-
-  // Connect to the database
-  constructor() {
-    mongoose.connect('mongodb://localhost:27017/transactions', {useNewUrlParser: true, useUnifiedTopology: true});
-    this.db.on('error', console.error.bind(console, 'connection error:'));
-    this.db.once('open', function() {
-      console.log('Connected to the database');
-    });
+  generateReceiptHash() {
+    throw new Error('Method not implemented.');
   }
 
-  // createTransaction
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  calculateGasFee(gasUsed: number) {
+    // calculate gas fess randpmly 
+    return Math.floor(Math.random() * 100);
+  }
+
+  getWalletBalance(source: string) {
+    throw new Error('Method not implemented.');
+  }
+  constructor(@InjectModel('Transaction') private readonly transactionModel: Model<Transaction>) {}
+
+  async createTransaction(createTransactionDto: CreateTransactionDto): Promise<Transaction> {
+    const createdTransaction = new this.transactionModel(createTransactionDto);
+    return createdTransaction.save();
   }
 
   // getTransactionHistory
   // returns a list of transaction records retrieved from the database
-  // for now lets start with a simple list of transactions before using a db
-  findAll() {
-    return "return transactions";
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
-  }
-
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async getAllTransactions(): Promise<Transaction[]> {
+    const transactionData = await this.transactionModel.find();
+    if (!transactionData || transactionData.length == 0) {
+        throw new NotFoundException('Transaction data not found!');
+    }
+    return transactionData;
   }
 }

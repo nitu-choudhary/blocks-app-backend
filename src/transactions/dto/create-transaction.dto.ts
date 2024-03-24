@@ -1,7 +1,18 @@
+import { IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
+
 export class CreateTransactionDto {
+    @IsString()
+    @IsNotEmpty()
     readonly source: string;
+
+    @IsString()
+    @IsNotEmpty()
     readonly destination: string;
+
+    @IsNumber()
+    @IsNotEmpty()
     readonly amount: number;
-    readonly gasUsed: number;
-    readonly receiptHash: string;
+
+    gasUsed: number;
+    receiptHash: string;
 }
