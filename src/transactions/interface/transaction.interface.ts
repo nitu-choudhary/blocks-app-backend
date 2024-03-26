@@ -6,4 +6,10 @@ export interface Transaction extends Document {
     amount: number;
     gasUsed: number;
     receiptHash: string;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+    txnHash: string;
+    blockHash: string;
+    blockNumber: number;
 }

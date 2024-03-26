@@ -25,7 +25,7 @@ export class CreateTransactionDto {
     updatedAt: Date;
 
     // receipt obj for transfers
-    txnHash: string;
+    transactionHash: string;
     blockHash: string;
     blockNumber: number;
 }

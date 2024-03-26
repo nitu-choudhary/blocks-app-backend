@@ -3,5 +3,11 @@ export class Transaction {
     destination: string;
     amount: number;
     gasUsed: number;
+    status: string;
     receiptHash: string;
+    createdAt: Date;
+    updatedAt: Date;
+    transactionHash: string;
+    blockHash: string;
+    blockNumber: number;
 }
