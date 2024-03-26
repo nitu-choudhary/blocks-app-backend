@@ -10,17 +10,11 @@ export class TransactionsController {
   async sendTransfer(@Res() response, @Body() createTransactionDto: CreateTransactionDto) {
     const { source, destination, amount, gasUsed, receiptHash } = createTransactionDto;
 
-    // validation checks
-    if (!source || !destination || !amount) {
-      return response.status(400).send({ message: 'Missing required fields' });
-    }
-    if (amount <= 0) {
-      return response.status(400).send({ message: 'Amount must be greater than 0' });
-    }
+    console.log('createTransactionDto', createTransactionDto);
 
     this.transactionsService.createTransaction(createTransactionDto);
 
-    return response.status(201).send({ message: 'Transaction created successfully' });
+    return response.status(201).send({ message: 'Transaction created successfully', createTransactionDto });
   }
 
   @Get('/history')
