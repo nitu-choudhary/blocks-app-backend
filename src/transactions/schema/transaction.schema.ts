@@ -28,7 +28,7 @@ export class Transaction {
     updatedAt: Date;
 
     @Prop()
-    txnHash: string;
+    transactionHash: string;
 
     @Prop()
     blockHash: string;

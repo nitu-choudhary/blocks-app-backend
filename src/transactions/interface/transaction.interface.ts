@@ -9,7 +9,7 @@ export interface Transaction extends Document {
     status: string;
     createdAt: Date;
     updatedAt: Date;
-    txnHash: string;
+    transactionHash: string;
     blockHash: string;
     blockNumber: number;
 }
