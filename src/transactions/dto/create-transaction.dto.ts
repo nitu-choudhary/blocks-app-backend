@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, MaxLength, isNumber } from "class-validator";
+import { defaultIfEmpty } from "rxjs";
 
 export class CreateTransactionDto {
     @IsString()
@@ -13,6 +14,18 @@ export class CreateTransactionDto {
     @IsNotEmpty()
     readonly amount: number;
 
-    gasUsed: number;
+    @IsNumber() 
+    gasUsed: number = 0; // Assign default value here which will be updated with a random value in the service
+    
+    status: string;
+
+    // txn history
     receiptHash: string;
+    createdAt: Date;
+    updatedAt: Date;
+
+    // receipt obj for transfers
+    txnHash: string;
+    blockHash: string;
+    blockNumber: number;
 }

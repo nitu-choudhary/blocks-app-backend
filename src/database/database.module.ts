@@ -4,9 +4,8 @@ import { TransactionSchema } from 'src/transactions/schema/transaction.schema';
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/myappdb'),
-        MongooseModule.forFeature([{ name: 'Transaction', schema: TransactionSchema }])
-    ],
+        MongooseModule.forRoot('mongodb://localhost:27017/myappdb')
+       ],
 })
 export class DatabaseModule {}
 
