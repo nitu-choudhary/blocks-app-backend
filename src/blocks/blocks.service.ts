@@ -1,14 +1,19 @@
+import { faker } from '@faker-js/faker';
 import { Injectable } from '@nestjs/common';
-import { ethereumAddresses, ethereumBlocks } from './mockData';
-
 @Injectable()
 export class BlocksService {
 
   getAllAddresses() {
-    return ethereumAddresses;
+    // user fakerjs to generate addresses array
+    return Array.from({ length: 5 }, () => faker.string.uuid());
   }
 
   getBlockDetailsByAddress(address: string) {
-    return ethereumBlocks.find(block => block.address === address);
+    // use fakerjs to generate block details
+    return {
+      address,
+      balance: faker.number.int(),
+      gasUsed: faker.number.int(),
+    };
   }
 }
